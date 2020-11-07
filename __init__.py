@@ -29,7 +29,7 @@ class Poi(MycroftSkill):
            my_place_id = place['place_id']
            my_fields = ['name', 'formatted_phone_number', 'type', 'formatted_address']
            place_details = gmaps.place(place_id = my_place_id, fields = my_fields)
-        self.speak_dialog('place_details')
+           self.speak_dialog('place_details')
 
 
 def create_skill():
