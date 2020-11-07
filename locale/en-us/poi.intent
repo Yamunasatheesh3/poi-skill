@@ -1,1 +1,8 @@
-Where is the nearest gas station
+{
+  "utterance": "where is the nearest gas station",
+  "intent_type": "poiIntent",
+  "intent": {
+    "poiKeyword": "where is the nearest gas station"
+  }
+}
+
