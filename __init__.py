@@ -57,7 +57,7 @@ class Poi(MycroftSkill):
             LOGGER.debug("Connected to Google API: %s" % self.maps)
          
 
-     def initialize(self):
+    def initialize(self):
              poi_intent = IntentBuilder("PoiIntent").require("PoiKeyword").build()
              self.register_intent(poi_intent, self.handle_poi_intent)
             
@@ -74,40 +74,46 @@ class Poi(MycroftSkill):
         
       
     def request_places(self, message):
+        self.speak_dialog("welcome")
+        latlong = message.data.get(places_nearby['geo_loc'])
+        api_root = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
+        api_params = '?location=' + latlong +\
+                     '&radius=' + 1500 +\
+                     '&type=best_guess' +\
+                     '&key=' + api_key
+        api_url = api_root + api_params
+        LOGGER.debug("API Request: %s" % api_url)
+        response = requests.get(api_url)
+                      
+        if response.status_code == requests.codes.ok and \
+                response.json()['status'] == "REQUEST_DENIED":
+           LOGGER.error(response.json())
+           self.speak_dialog('places.error.api')
+                      
         
-        self.speak_dialog("welcome",
-                          data={'destination': itinerary['dest_name'],
-                                'origin': itinerary['origin_name']})
-        # Places Nearby API
-        places_nearby_args = {
-            'name': itinerary['destination'],
-            'location': itinerary['origin']
+        elif response.status_code == requests.codes.ok:
+            LOGGER.debug("API Response: %s" % response)
+
+        places_nearby_ag = {
+            'name': poi_intent['end'],
+            'location': poi_intent['start']
             }
         if "OpenNowKeyword" in message.data:
-            places_nearby_args['open_now'] = True
-        # nearby_places = self.maps.places_nearby(**places_nearby_args)
-        # Places API
-        places_args = {
-            'query': itinerary['destination'],
-            'location': itinerary['origin']
+            places_nearby_ag['open_now'] = True
+        places_ag = {
+            'query': poi_intent['end'],
+            'location': poi_intent['start']
             }
         if "OpenNowKeyword" in message.data:
-            places_args['open_now'] = True
-        places = self.maps.places(**places_args)
+            places_ag['open_now'] = True
+        places = self.maps.places(**places_ag)
         LOGGER.debug("Places Module Result: %s" % places)
-        itinerary['destination'] = places
-        dist_args = {
-            'origins': itinerary['origin'],
-            'destinations': itinerary['destination'],
-            'mode': 'driving',
-            'units': self.dist_units
-            }
-        drive_details = self.maps.distance(**dist_args)
-        duration_norm = drive_details[0]
-        duration_traffic = drive_details[1]
-        traffic_time = drive_details[2]
+        poi_intent['end'] = places
+        self.speak_dialog("The places are", data={"places":places})
 
-
+        def stop(self):
+        pass
+                      
 def create_skill():
     return Poi()
 
