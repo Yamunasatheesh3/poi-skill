@@ -110,7 +110,7 @@ class Poi(MycroftSkill):
         places = self.maps.places(**places_ag)
         LOGGER.debug("Places Module Result: %s" % places)
         poi_intent['end'] = places
-        self.speak_dialog("The places are", data={"places":places})
+        self.speak_dialog("places.are", data={"places":places})
 
         def stop(self):
         pass
