@@ -10,6 +10,7 @@ from mycroft.skills.core import MycroftSkill
 from mycroft.util.log import getLogger
 
 LOGGER = getLogger(__name__)
+api_key = 'AIzaSyBp25k9LqhGDh4nAIHeFnhu045jrWPnWkg'
 
 class GoogleMapsClient(object):
     
