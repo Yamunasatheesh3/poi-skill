@@ -1,0 +1,7 @@
+{
+  "utterance": "what is the starting point",
+  "intent_type": "PoiIntent",
+  "intent": {
+    "PoiKeyword": "what is the starting point"
+  }
+}
