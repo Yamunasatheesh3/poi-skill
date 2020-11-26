@@ -1,5 +1,5 @@
 import json
-import googlemaps
+from googleapiclient import googlemaps
 import pprint
 import time
 from os.path import dirname, join
@@ -50,7 +50,7 @@ class Poi(MycroftSkill):
     def __init__(self):
          super(Poi, self).__init__("Poi")
       #  MycroftSkill.__init__(self)
-         provider = self.config.get('provider', 'google')
+         provider = self.settings.get('provider', 'google')
          LOGGER.debug("Configured Provider: %s" % provider
          if provider == 'google':
             api_key = self.config.get('api_key', None)
@@ -65,11 +65,8 @@ class Poi(MycroftSkill):
     @intent_file_handler('poi.intent')
     def poi_intent(self, message):
         try:
-        start = message.data.get('whatIsTheStartingPoint')
-        end = message.data.get('whereIsTheDestination')
-        self.speak_dialog("welcome",
-                          data={'destination': end,
-                                'origin': start})
+        places = message.data.get('whatAreTheNearByPlaces')
+        self.speak_dialog("welcome")
         except Exception as err:
             LOGGER.error("Error: {0}".format(err))
         
