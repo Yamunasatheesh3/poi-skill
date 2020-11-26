@@ -1,7 +1,7 @@
 {
-  "utterance": "what is the starting point",
+  "utterance": "what are the nearby places",
   "intent_type": "PoiIntent",
   "intent": {
-    "PoiKeyword": "what is the starting point"
+    "PoiKeyword": "what are the nearby places"
   }
 }
