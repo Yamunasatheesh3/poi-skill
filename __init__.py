@@ -36,7 +36,7 @@ class GoogleMapsClient(object):
         geo_place_id = "place_id:%s" % closest_result['place_id']
         return geo_place_id
     
-     def places_nearby(self, **places_nearby_ag):
+    def places_nearby(self, **places_nearby_ag):
         LOGGER.debug('Google API - Places Nearby')
         response = self.gmaps.places_nearby(**places_nearby_ag)
         LOGGER.debug("API Response: %s" % json.dumps(response))
