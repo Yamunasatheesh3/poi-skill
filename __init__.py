@@ -50,12 +50,9 @@ class Poi(MycroftSkill):
     def __init__(self):
          super(Poi, self).__init__("Poi")
       #  MycroftSkill.__init__(self)
-         provider = self.settings.get('provider', 'google')
-         LOGGER.debug("Configured Provider: %s" % provider
-         if provider == 'google':
-            api_key = self.config.get('api_key', None)
-            self.maps = GoogleMapsClient(api_key)
-            LOGGER.debug("Connected to Google API: %s" % self.maps)
+         api_key = self.settings.get('api_key', None)
+         self.maps = GoogleMapsClient(api_key)
+         LOGGER.debug("Connected to Google API: %s" % self.maps)
          
 
     def initialize(self):
