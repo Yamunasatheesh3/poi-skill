@@ -63,7 +63,6 @@ class Poi(MycroftSkill):
     def poi_intent(self, message):
         try:
         places = message.data.get('whatAreTheNearByPlaces')
-        self.speak_dialog("welcome")
         except Exception as err:
             LOGGER.error("Error: {0}".format(err))
         
