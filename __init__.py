@@ -72,8 +72,8 @@ class Poi(MycroftSkill):
         latlong = message.data.get(places_nearby['geo_loc'])
         api_root = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
         api_params = '?location=' + latlong +\
-                     '&radius=' + 1500 +\
-                     '&type=best_guess' +\
+                     '&radius=' + 50000 +\
+                     '&type=formatted_address' +\
                      '&key=' + api_key
         api_url = api_root + api_params
         LOGGER.debug("API Request: %s" % api_url)
